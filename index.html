@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Những vật thể lớn nhất vũ trụ</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #000;
+      color: white;
+      height: 100vh;
+      justify-content: center;
+      text-align: center;
+    }
+    .navigation-container {
+      width: 90%;
+      margin: 20px auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+    }
+    
+    .nav-button {
+      padding: 15px 30px;
+      background: linear-gradient(45deg, #333, #555);
+      color: white;
+      border: 2px solid #666;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      min-width: 100px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .nav-button:hover {
+      background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+      border-color: #ff6b6b;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+    }
+    
+    .nav-button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .nav-button:disabled:hover {
+      background: linear-gradient(45deg, #333, #555);
+      border-color: #666;
+      transform: none;
+      box-shadow: none;
+    }
+    
+    .current-object {
+      font-size: 18px;
+      font-weight: bold;
+      color: #ff6b6b;
+      min-width: 150px;
+      text-align: center;
+    }
+    .description {
+      margin-top: 20px;
+      font-size: 1.5em;
+      max-width: 600px;
+    }
+    body {
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #000;
+      color: white;
+      height: 100vh;
+      justify-content: center;
+      text-align: center;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      transition: background-image 0.5s ease;
+    }
+    
+    .content {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 30px;
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+      max-width: 800px;
+      margin: 20px;
+      transition: all 0.5s ease;
+    }
+    
+    .romantic-mode .content {
+      background: rgba(255, 20, 147, 0.2);
+      border: 2px solid rgba(255, 20, 147, 0.5);
+      box-shadow: 0 0 30px rgba(255, 20, 147, 0.3);
+      animation: pulse 2s infinite;
+    }
+    
+    .romantic-mode h1 {
+      color: #ff69b4;
+      text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+    
+    .romantic-mode .description {
+      color: #ffb6c1;
+      font-size: 2em;
+      font-weight: bold;
+      text-shadow: 0 0 15px rgba(255, 182, 193, 0.8);
+      animation: heartbeat 1.5s ease-in-out infinite;
+    }
+    
+    .floating-hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1000;
+    }
+    
+    .heart {
+      position: absolute;
+      font-size: 20px;
+      color: #ff69b4;
+      animation: float 6s linear infinite;
+      opacity: 0;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+    }
+    
+    @keyframes glow {
+      from { text-shadow: 0 0 10px rgba(255, 105, 180, 0.5); }
+      to { text-shadow: 0 0 20px rgba(255, 105, 180, 0.8), 0 0 30px rgba(255, 105, 180, 0.6); }
+    }
+    
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="floating-hearts" id="floatingHearts"></div>
+  <div class="content">
+    <h1>Những vật thể lớn nhất vũ trụ</h1>
+    <div class="navigation-container">
+      <button class="nav-button" id="prevButton">← Trước</button>
+      <div class="current-object" id="currentObject"></div>
+      <button class="nav-button" id="nextButton">Tiếp →</button>
+    </div>
+    <div class="description" id="zoomDescription"></div>
+  </div>
+  </div>
+
+  <script>
+    const descriptions = [
+      "Hành Tinh – Thiên thể quay quanh ngôi sao, có khối lượng đủ lớn để có hình dạng cầu do lực hấp dẫn. Nơi sự sống nở hoa và tình yêu tồn tại...",
+      "Hệ Mặt Trời – Hệ thống thiên thể gồm một ngôi sao trung tâm và các hành tinh, vệ tinh, tiểu hành tinh quay quanh. Vũ điệu hoàn hảo của vũ trụ...",
+      "Thiên Hà – Hệ thống khổng lồ gồm hàng tỷ ngôi sao, khí, bụi và vật chất tối. Mỗi thiên hà tỏa sáng như một thành phố vũ trụ rực rỡ...",
+      "Cụm Thiên Hà – Nhóm lớn gồm hàng trăm đến hàng nghìn thiên hà được liên kết bởi lực hấp dẫn. Cấu trúc vĩ đại nhất trong vũ trụ quan sát được...",
+      "My love for you <3"
+    ];
+
+    const backgroundImages = [
+      './images/pexels-pixabay-87651.jpg',
+      './images/pexels-pixabay-87611.jpg',
+      './images/pexels-pixabay-2150.jpg',
+      './images/wormhole-5319067.jpg',
+      './images/my_love.jpg',
+    ];
+
+    const prevButton = document.getElementById('prevButton');
+    const nextButton = document.getElementById('nextButton');
+    const currentObject = document.getElementById('currentObject');
+    const desc = document.getElementById('zoomDescription');
+
+    const objectLabels = [
+      'Trái Đất',
+      'Mặt trời',
+      'Thiên hà',
+      'Hố đen',
+      'Lớn nhất từ trước đến nay'
+    ];
+
+    let currentIndex = 0;
+
+    function updateZoom(value) {
+      currentIndex = value;
+      desc.textContent = descriptions[value];
+      currentObject.textContent = objectLabels[value];
+      
+      // Update button states
+      prevButton.disabled = value === 0;
+      nextButton.disabled = value === objectLabels.length - 1;
+      
+      // Change background image
+      document.body.style.backgroundImage = `url('${backgroundImages[value]}')`;
+      
+      // Check if it's the romantic slide (last slide)
+      if (value === objectLabels.length - 1) {
+        document.body.classList.add('romantic-mode');
+        startFloatingHearts();
+      } else {
+        document.body.classList.remove('romantic-mode');
+        stopFloatingHearts();
+      }
+    }
+    
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.innerHTML = '❤️';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+      heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+      document.getElementById('floatingHearts').appendChild(heart);
+      
+      // Remove heart after animation
+      setTimeout(() => {
+        if (heart.parentNode) {
+          heart.parentNode.removeChild(heart);
+        }
+      }, 6000);
+    }
+    
+    function startFloatingHearts() {
+      // Create hearts every 300ms
+      const heartInterval = setInterval(createHeart, 300);
+      // Store interval ID to stop later
+      window.heartInterval = heartInterval;
+    }
+    
+    function stopFloatingHearts() {
+      if (window.heartInterval) {
+        clearInterval(window.heartInterval);
+        window.heartInterval = null;
+      }
+      // Clear existing hearts
+      document.getElementById('floatingHearts').innerHTML = '';
+    }
+
+    function nextObject() {
+      if (currentIndex < objectLabels.length - 1) {
+        updateZoom(currentIndex + 1);
+      }
+    }
+
+    function prevObject() {
+      if (currentIndex > 0) {
+        updateZoom(currentIndex - 1);
+      }
+    }
+
+    // Add event listeners
+    nextButton.addEventListener('click', nextObject);
+    prevButton.addEventListener('click', prevObject);
+
+    // Add keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        nextObject();
+      } else if (e.key === 'ArrowLeft') {
+        prevObject();
+      }
+    });
+
+    // Initialize
+    updateZoom(0);
+  </script>
+</body>
+</html>
